@@ -32,7 +32,7 @@ Ytest=[]
 MAX_HEIGHT=683
 MAX_WIDTH=1024
 MASK_SIZE=25 #musi być nieparzysta
-PHOTO_SAMPLES=15000
+PHOTO_SAMPLES=25000
 #ładuj zdjęcia
 directory = os.getcwd()+"\Small" + '/'
 for file in os.listdir("Small"):
@@ -168,7 +168,7 @@ for i in range(0,k):
 
 
     model = tflearn.DNN(network, tensorboard_verbose=0)
-    model.fit(X, Y, n_epoch=1, shuffle=True, validation_set=(Xtest, Ytest),
+    model.fit(X, Y, n_epoch=4, shuffle=True, validation_set=(Xtest, Ytest),
                   show_metric=True,batch_size=64,snapshot_epoch=True)
 
 

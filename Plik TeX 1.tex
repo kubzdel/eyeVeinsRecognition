@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{filecontents}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\graphicspath{ {res/} }
+ \title{Wykrywanie żyłek w oku}
+\date{2018\\ Maj}
+\author{Jakub Tomczak \\ Konrad Kubzdela}
+\begin{document}
+\maketitle
+\clearpage
+\section{Wstęp}
+Do zrealizowania zadania użyliśmy konwolucyjnej sieci neuronowej z własnym  modelem. Sieć przyjmuje na wejściu kwadratową macierz o zadanym rozmiarze, a na wyjściu zwraca 0 lub 1.
+\section{Przygotowanie próbek}
+\subsection{Dane}
+Do naszego zbioru użyliśmy zdjęć den oczu oraz masek z dwóch różnych stron. Ostatecznie zbiór danych liczył 43 zdjęcia.
+\subsection{Próbka}
+Pojedynczą próbką jest losowy fragment obrazu oka w skali szarości o zadanym rozmiarze. Wynikiem dla takiej próbki jest wartość środkowego piksela dla zadanego okienka z maski, gdzie 0 oznacza brak żyły a 255 żyłę.  
+\section{k-krotna walidacja krzyżowa}
+
+Do oceny naszych danych i modelu użyliśmy 10-krotnej walidacji krzyżowej. Po pobraniu około 500 tysięcy próbek ze wszystkich zdjęć całość mieszaliśmy, a następnie dzieliliśmy na 10 równych części. 
+Cały model trenowaliśmy od nowa 10 razy gdzie każda 1/10 z tych danych stanowiła zbiór testowy dla sieci a reszta zbiór do uczenia.
+
+\section{Struktura sieci}
+Cała sieć składa się z:
+\begin{itemize}
+  \item warstwy wejściowej przyjmującej próbkę o rozmiarze okienka
+  \item trzech warstw konwolucyjnych
+  \item dwóch warstw dokonujących max-pool’ing 
+  \item wykorzystującej technikę dropout 
+ \item dwóch warstw w pełni połączonych (full connect – fc)
+  \item jednej warstwie wyjściowej o rozmiarze 2(żyła lub nie żyła)
+\end{itemize}
+\section{Błąd średniokwadratowy}
+Jako miary jakości użylimy średniej kwadratowej błędów, który obliczyliśmy na podstawie odchyleń wartości pikseli obrazu wyjściowego od wejściowego.
+
+
+
+$$\sqrt{\frac{1}{n^2} \sum\limits_{i=1}^n\sum\limits_{j=1}^n (x_{ij}-y_{ij})^2}$$ 
+\clearpage
+\subsection{Błąd średniokwadratowy w zależności od iteracji}
+\centering liczba detektorów n =50\\*
+kąt rozwarcia = \ang{50}
+\centering
+
+\subsection
+ {Błąd średniokwadratowy w funkcji ilości emiterów i detektorów.}
+\centering
+\subsection{Błąd średniokwadratowy w zależności od zastosowanych filtrów.}
+liczba detektorów n=100
+
+\subsection{Błąd średniokwadratowy w zależności od rozpiętości kątowej}
+liczba detektorów n =100
+\centering
+
+\subsection{Błąd średniokwadratowy w zależności od iteracji}
+liczba detektorów n =100
+\centering 
+\end{document}
