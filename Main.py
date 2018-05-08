@@ -32,7 +32,7 @@ Y = []
 Xtest = []
 Ytest = []
 MASK_SIZE = 25  # musi być nieparzysta
-PHOTO_SAMPLES = 25000
+PHOTO_SAMPLES = 8000
 # ładuj zdjęcia
 directory = os.getcwd() + "\Small" + '/'
 for file in os.listdir("Small"):
@@ -131,9 +131,9 @@ for i in range(0, k):
 
     network = max_pool_2d(network, 2)
 
-    network = fully_connected(network, 1024, activation='relu')
+    network = fully_connected(network, 256, activation='relu')
 
-    network = dropout(network, 0.5)
+    network = dropout(network, 0.4)
 
     network = fully_connected(network, 2, activation='softmax')
 
@@ -142,7 +142,7 @@ for i in range(0, k):
                          learning_rate=0.001)
 
     model = tflearn.DNN(network, tensorboard_verbose=0)
-    model.fit(X, Y, n_epoch=3, shuffle=True, validation_set=(Xtest, Ytest),
+    model.fit(X, Y, n_epoch=8, shuffle=True, validation_set=(Xtest, Ytest),
               show_metric=True, batch_size=64, snapshot_epoch=True)
 
     accuracy = 0
@@ -157,13 +157,13 @@ for i in range(0, k):
     averageAcc += accuracy
     print("Acucracy: " + str(accuracy))
 
-    model.save("docelowy2/" + str(accuracy) + " eye-veins-classifier.tfl")
+    model.save("docelowy4/" + str(accuracy) + " eye-veins-classifier.tfl")
 
     print("Network trained and saved as eye-veinsclassifier.tfl!")
     tf.reset_default_graph()
 
 averageAcc = averageAcc / k
 print(averageAcc)
-text_file = open("docelowy2/averageACC.txt", "w")
+text_file = open("docelowy4/averageACC.txt", "w")
 text_file.write("Średnia dokładność: " + str(averageAcc))
 text_file.close()
